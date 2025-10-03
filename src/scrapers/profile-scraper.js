@@ -1,19 +1,21 @@
-import puppeteer from "puppeteer";
+// src/scrapers/profile-scraper.js
 
-export async function scrapeProfile(username) {
+const puppeteer = require("puppeteer");
+
+async function scrapeProfile(username) {
   const browser = await puppeteer.launch({
-  headless: false,
-  args: [
-    "--no-sandbox",
-    "--disable-setuid-sandbox",
-    "--disable-blink-features=AutomationControlled",
-  ],
-});
+    headless: false,
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-blink-features=AutomationControlled",
+    ],
+  });
   const page = await browser.newPage();
 
-await page.setUserAgent(
-  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
-);
+  await page.setUserAgent(
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+  );
 
   const profileUrl = `https://www.tiktok.com/@${username}`;
   console.log(`📍 Visiting: ${profileUrl}`);
@@ -21,7 +23,6 @@ await page.setUserAgent(
     waitUntil: "networkidle2",
     timeout: 120000,
   });
-  // await page.waitForTimeout(8000); // wait 8s for page to settle
 
   // Wait for profile container to load
   await page.waitForSelector('div[data-e2e="user-avatar"]', { timeout: 60000 });
@@ -41,3 +42,5 @@ await page.setUserAgent(
   await browser.close();
   return profileData;
 }
+
+module.exports = { scrapeProfile };

@@ -1,4 +1,6 @@
-import puppeteer from "puppeteer";
+// src/scrapers/scrapeHashtag.js
+
+const puppeteer = require("puppeteer");
 
 // Helper: convert likes/views string to number
 function parseCount(countStr) {
@@ -10,7 +12,7 @@ function parseCount(countStr) {
 }
 
 // Ranked Hashtag Scraper
-export async function scrapeHashtagVideos(hashtag) {
+async function scrapeHashtagVideos(hashtag) {
   if (!hashtag) throw new Error("Hashtag is required.");
 
   const browser = await puppeteer.launch({ headless: false });
@@ -78,3 +80,5 @@ async function autoScroll(page) {
     });
   });
 }
+
+module.exports = { scrapeHashtagVideos };

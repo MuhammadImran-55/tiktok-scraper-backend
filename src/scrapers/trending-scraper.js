@@ -1,4 +1,6 @@
-import puppeteer from "puppeteer";
+// trending-scraper.js
+
+const puppeteer = require("puppeteer");
 
 // Helper to parse likes/views
 function parseCount(countStr) {
@@ -10,7 +12,7 @@ function parseCount(countStr) {
 }
 
 // Live Ranked General Trending Scraper
-export async function scrapeTrendingVideosRanked() {
+async function scrapeTrendingVideosRanked() {
   const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
   await page.setViewport({ width: 1280, height: 800 });
@@ -67,3 +69,8 @@ async function autoScroll(page) {
     });
   });
 }
+
+// Export functions (CommonJS)
+module.exports = {
+  scrapeTrendingVideosRanked
+};

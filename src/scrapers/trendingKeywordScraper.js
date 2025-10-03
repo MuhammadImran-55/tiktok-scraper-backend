@@ -1,5 +1,8 @@
-import puppeteer from "puppeteer";
+// src/scrapers/trendingKeywordScraper.js
 
+const puppeteer = require("puppeteer");
+
+// Helper to parse likes/views
 function parseCount(countStr) {
   if (!countStr) return 0;
   countStr = countStr.replace(",", "").toUpperCase();
@@ -8,7 +11,8 @@ function parseCount(countStr) {
   return parseInt(countStr) || 0;
 }
 
-export async function scrapeTrendingKeywordRanked(keyword) {
+// Live Ranked Trending Keyword Scraper
+async function scrapeTrendingKeywordRanked(keyword) {
   if (!keyword) throw new Error("Keyword is required for trending keyword scraping.");
 
   let browser;
@@ -69,6 +73,7 @@ export async function scrapeTrendingKeywordRanked(keyword) {
   }
 }
 
+// Auto-scroll helper
 async function autoScroll(page) {
   await page.evaluate(async () => {
     await new Promise((resolve) => {
@@ -86,3 +91,5 @@ async function autoScroll(page) {
     });
   });
 }
+
+module.exports = { scrapeTrendingKeywordRanked };
